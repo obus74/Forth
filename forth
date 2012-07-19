@@ -70,6 +70,38 @@ symbol_table.STACK = function(...)
   end
 end -- STACK
 
+symbol_table['<='] = function(...)
+  local a, b = pop(2)
+  push(a <= b)
+end -- less/equal
+
+symbol_table['<'] = function(...)
+  local a, b = pop(2)
+  push(a < b)
+end -- less
+
+symbol_table['>='] = function(...)
+  local a, b = pop(2)
+  push(a >= b)
+end -- greater/equal
+
+symbol_table['>'] = function(...)
+  local a, b = pop(2)
+  push(a > b)
+end -- greater
+
+symbol_table.IF = function(original_dispatcher)
+  if pop() then
+    return make_dispatch_execute_until(original_dispatcher, "ELSE",
+      make_dispatch_skip_until("THEN",
+        original_dispatcher))
+  else
+    return make_dispatch_skip_until("ELSE",
+      make_dispatch_execute_until(original_dispatcher, "THEN",
+        original_dispatcher))
+  end
+end -- IF/ELSE
+
 --
 --  Dispatch
 ----------------
