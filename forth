@@ -102,6 +102,18 @@ symbol_table.IF = function(original_dispatcher)
   end
 end -- IF/ELSE
 
+symbol_table.IF = function(original_dispatcher)
+  if pop() then
+    return make_dispatch_execute_until(original_dispatcher, "ELSE",
+      make_dispatch_skip_until("THEN",
+        original_dispatcher))
+  else
+    return make_dispatch_skip_until("ELSE",
+      make_dispatch_execute_until(original_dispatcher, "THEN",
+        original_dispatcher))
+  end
+end -- IF/ELSE
+
 --
 --  Dispatch
 ----------------
