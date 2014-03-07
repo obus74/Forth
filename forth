@@ -139,17 +139,26 @@ symbol_table.IF = function(original_dispatcher)
   end
 end -- IF/ELSE
 
-symbol_table.IF = function(original_dispatcher)
-  if pop() then
-    return make_dispatch_execute_until(original_dispatcher, "ELSE",
-      make_dispatch_skip_until("THEN",
-        original_dispatcher))
-  else
-    return make_dispatch_skip_until("ELSE",
-      make_dispatch_execute_until(original_dispatcher, "THEN",
-        original_dispatcher))
+-- Comment
+symbol_table['('] = function(original_dispatcher)
+  return make_dispatch_skip_until(")", original_dispatcher)
+end -- comment
+
+-- Define new symbol
+symbol_table[':'] = function(original_dispatcher)
+  local accumulator = {}
+  return function(disp, word)
+    if word == ";" then
+      local sym = table.remove(accumulator, 1)
+      symbol_table[sym] = function(disp)
+        dispatch_list(original_dispatcher, accumulator)
+      end
+      return original_dispatcher
+    else
+      accumulator[#accumulator+1] = word
+    end
   end
-end -- IF/ELSE
+end -- define
 
 --
 --  Dispatch
