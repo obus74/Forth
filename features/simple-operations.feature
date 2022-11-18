@@ -44,3 +44,9 @@ Feature: The Forth interpreter shall understand basic operations
      Then I should get "1 0 ok"
      When I execute "0 3 1 MIN . ."
      Then I should get "1 0 ok"
+     
+  Scenario: Maximum
+     When I execute "0 1 3 MAX . ."
+     Then I should get "3 0 ok"
+     When I execute "0 3 1 MAX . ."
+     Then I should get "3 0 ok"

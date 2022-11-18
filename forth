@@ -57,6 +57,15 @@ symbol_table.CLEAR = function(...)
   stack = {}
 end -- CLEAR
 
+symbol_table.MAX = function(...)
+  local a, b = pop(2)
+  if a > b then
+    push(a)
+  else
+    push(b)
+  end
+end -- 'MAX'
+
 symbol_table['*'] = function(...)
   local a, b = pop(2)
   push(a * b)
