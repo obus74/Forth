@@ -44,6 +44,15 @@ symbol_table.SWAP = function(...)
   push(b, a)
 end -- SWAP
 
+symbol_table.MIN = function(...)
+  local a, b = pop(2)
+  if a < b then
+    push(a)
+  else
+    push(b)
+  end
+end -- 'MIN'
+
 symbol_table.CLEAR = function(...)
   stack = {}
 end -- CLEAR

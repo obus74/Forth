@@ -38,3 +38,9 @@ Feature: The Forth interpreter shall understand basic operations
   Scenario: Negation
      When I execute "1 NEG ."
      Then I should get "-1 ok"
+
+  Scenario: Minimum
+     When I execute "0 1 3 MIN . ."
+     Then I should get "1 0 ok"
+     When I execute "0 3 1 MIN . ."
+     Then I should get "1 0 ok"
